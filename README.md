@@ -2,14 +2,14 @@
 
 Ez a repository C# ASP.NET Core API fejlesztés tanulására készült projektek gyűjteménye. Minden projekt egy-egy fontos koncepciót mutat be a modern web API fejlesztésben.
 
-## 📚 Projektek Áttekintése
+## 📚 Projektek Áttekintése és Elérhető Endpoint-ok
 
 ### 1. **RestApiHasznalat** - REST API Kliens
 **Tanulási Fókusz:** Külső API-k fogyasztása C#-ban
 
 **Mit tanulhatsz meg:**
 - HttpClient használata
-- REST API hívások (GET)
+- REST API hívások (GET, PATCH)
 - JSON deszerializáció
 - Async/await pattern külső API-kkal
 - Error handling HTTP kérésekben
@@ -23,6 +23,10 @@ Ez a repository C# ASP.NET Core API fejlesztés tanulására készült projektek
 
 **Példa API:** Chuck Norris Jokes API integráció
 
+**Futtatás:** Console alkalmazás, nincs saját endpoint (kliens oldal)
+
+📖 **[Részletes README →](./RestApiHasznalat/README.md)**
+
 ---
 
 ### 2. **TodoApiController** - Controller-based API
@@ -33,51 +37,78 @@ Ez a repository C# ASP.NET Core API fejlesztés tanulására készült projektek
 - RESTful API tervezés (GET, POST, PUT, DELETE)
 - In-memory data store implementálás
 - FluentValidation a controller context-ben
-- LoginController - autentikáció
-- TodoController - CRUD műveletek
-- UserController - felhasználó kezelés
-- Model validáció
+- CRUD műveletek teljes implementációja
 
 **Főbb technológiák:**
 - ASP.NET Core Controllers
 - FluentValidation
-- JWT Authentication
-- Custom data store interface
+- In-memory DataStore
+- Swagger/OpenAPI
 
-**API Endpoint-ok:**
-- `/api/login` - Bejelentkezés
-- `/api/todo` - Todo CRUD műveletek
-- `/api/user` - Felhasználó kezelés
+**🌐 Elérés:**
+- **Port:** http://localhost:5000 (alapértelmezett)
+- **Swagger UI:** http://localhost:5000/swagger
+
+**📍 API Endpoint-ok:**
+- `GET /api/todo` - Összes todo elem lekérése
+- `GET /api/todo/{id}` - Egy todo elem lekérése ID alapján
+- `POST /api/todo` - Új todo elem létrehozása
+- `PUT /api/todo/{id}` - Meglévő todo elem módosítása
+- `DELETE /api/todo/{id}` - Todo elem törlése
+
+📖 **[Részletes README →](./TodoApiController/README.md)**
 
 ---
 
-### 3. **Authentication** - Haladó Autentikáció
-**Tanulási Fókusz:** Autentikáció és autorizáció részletesen
+### 3. **Authentication** - Haladó JWT Autentikáció
+**Tanulási Fókusz:** Autentikáció, autorizáció, role-based access control
 
 **Mit tanulhatsz meg:**
 - JWT Options pattern (`JwtOptions` osztály)
-- Secure token generálás
+- PBKDF2 password hashing (Rfc2898DeriveBytes)
+- Role-Based Authorization (Felhasználó vs. Administrator)
+- Claims-based authentication
 - User management implementálás
 - Interface-based architecture (`IUser`, `IDataStore`)
-- Dependency Injection advanced patterns
-- Claims és Roles kezelés
-- Password handling (egyszerűsített, tanulási célra)
+- Secure token generálás és validálás
 
 **Főbb technológiák:**
+- JWT Bearer Authentication
 - Options Pattern
+- PBKDF2 Password Hashing
+- FluentValidation
 - Interface Segregation Principle
-- Custom authentication logic
-- In-memory user store
 
-**Architektúra jellemzők:**
-- Szeparált modellek (LoginUser, User, TodoItem)
-- Interface-based design
-- Validator osztályok külön fájlokban
+**🌐 Elérés:**
+- **HTTP Port:** http://localhost:5154
+- **HTTPS Port:** https://localhost:7036
+- **Swagger UI:** http://localhost:5154/swagger
+
+**📍 API Endpoint-ok:**
+
+**Login:**
+- `POST /api/login` - JWT token generálás (Body: `{"userName":"user","password":"pass"}`)
+
+**User Management:**
+- `GET /api/user` - Összes felhasználó listázása (publikus)
+- `GET /api/user/{username}` - Egyedi felhasználó lekérése (publikus)
+- `POST /api/user` - Új felhasználó regisztrálása (publikus)
+- `PUT /api/user/{username}` - Felhasználó módosítása **[🔒 VÉDETT]** (saját profil vagy Admin)
+- `DELETE /api/user/{username}` - Felhasználó törlése **[🔒 ADMIN ONLY]**
+
+**Todo (JWT védelem alatt):**
+- `GET /api/todo` - Összes todo elem
+- `GET /api/todo/{id}` - Egy todo elem
+- `POST /api/todo` - Új todo létrehozása
+- `PUT /api/todo/{id}` - Todo módosítás
+- `DELETE /api/todo/{id}` - Todo törlés
+
+📖 **[Részletes README →](./Authentication/README.md)**
 
 ---
 
-### 4. **MinimalAPIDemo** - Alapvető Minimal API
-**Tanulási Fókusz:** Minimal API alapok, JWT autentikáció, middleware pipeline
+### 4. **MinimalAPIDemo** - Minimal API Alapok
+**Tanulási Fókusz:** Minimal API pattern, lambda-based endpoint-ok, JWT
 
 **Mit tanulhatsz meg:**
 - Minimal API endpoint-ok létrehozása (`MapGet`, `MapPost`)
@@ -85,42 +116,107 @@ Ez a repository C# ASP.NET Core API fejlesztés tanulására készült projektek
 - Token generálás és validálás
 - Authorization middleware használata
 - Swagger/OpenAPI dokumentáció
-- Route paraméterek kezelése
+- Route paraméterek kezelése (pl. `/{id}`)
 - Claims-based autorizáció
+- Lambda expressions endpoint definíciókhoz
 
 **Főbb technológiák:**
 - ASP.NET Core Minimal API
 - JWT Bearer Authentication
 - Microsoft.IdentityModel.Tokens
 - Swagger UI
+- Lambda-based routing
 
-**Port:** `http://localhost:5091`
+**🌐 Elérés:**
+- **Port:** http://localhost:5091
+- **Swagger UI:** http://localhost:5091/swagger
+
+**📍 API Endpoint-ok:**
+- `POST /login` - JWT token generálás (Query params: `?user=admin&password=admin`)
+- `GET /weatherforecast` - Időjárás adatok lekérése **[🔒 VÉDETT]** (Authorization header szükséges)
+- `GET /id_alapjan/{id}` - Adat lekérése ID alapján **[🔒 VÉDETT]**
+- `POST /uj_beallitas` - Új beállítás feltöltés **[🔒 VÉDETT]**
+- `POST /feltoltes` - Fájl feltöltés **[🔒 VÉDETT]**
+
+**Példa JWT használat:**
+```bash
+# 1. Token megszerzése
+curl -X POST "http://localhost:5091/login?user=admin&password=admin"
+
+# 2. Védett endpoint hívás
+curl -H "Authorization: Bearer <TOKEN>" \
+     http://localhost:5091/id_alapjan/3
+```
+
+📖 **[Részletes README →](./MinimalAPIDemo/README.md)**
 
 ---
 
-### 5. **FastEndpoints** - FastEndpoints Framework
-**Tanulási Fókusz:** FastEndpoints library, endpoint szervezés, FluentValidation
+### 5. **FastEndpoints** - Modern Endpoint Architecture
+**Tanulási Fókusz:** FastEndpoints framework, típusbiztos endpoint osztályok
 
 **Mit tanulhatsz meg:**
 - FastEndpoints framework használata
-- Endpoint osztályok létrehozása és szervezése
+- Endpoint-per-class architektúra (Single Responsibility)
+- Típusbiztos request/response objektumok (`Endpoint<TRequest, TResponse>`)
+- Beépített FluentValidation integráció
 - Dependency Injection endpoint-okban
-- FluentValidation integráció
 - Strukturált hibakezelés
-- Type-safe endpoint konfigurálás
-- Constructor injection endpoint-okban
+- CancellationToken automatikus kezelés
+- Fluent API endpoint konfiguráláshoz (`Configure()` metódus)
 
 **Főbb technológiák:**
 - FastEndpoints 5.30.0
 - FluentValidation
 - JWT Authentication
 - Options pattern
+- Type-safe API design
 
 **Különbségek a Minimal API-hoz képest:**
-- Endpoint-ok osztály alapúak, nem inline lambda-k
-- Beépített validáció támogatás
-- Jobb kód szervezés nagyobb projektekhez
-- Type-safe request/response handling
+- ✅ Endpoint-ok osztály alapúak, nem inline lambda-k
+- ✅ Beépített validáció támogatás
+- ✅ Jobb kód szervezés nagyobb projektekhez
+- ✅ Type-safe request/response handling
+- ✅ Automatikus CancellationToken injektálás
+
+**🌐 Elérés:**
+- **Port:** http://localhost:5091 (vagy projekt-specifikus port)
+- **Swagger UI:** http://localhost:5091/swagger
+
+**📍 API Endpoint-ok:**
+- `POST /login` - JWT token generálás (Body: `{"user":"test","password":"test"}`)
+  - **Endpoint Class:** `LoginEndPoint.cs`
+  - **Request Type:** `LoginData { user, password }`
+  - **Response Type:** `string` (JWT token)
+  
+- `GET /weather` - Időjárás adatok lekérése **[🔒 VÉDETT]**
+  - **Endpoint Class:** `GetWeather.cs`
+  
+- `GET /id_alapjan/{id}` - ID alapú lekérdezés **[🔒 VÉDETT]**
+  - **Endpoint Class:** `IdAlapjan.cs`
+  
+- `POST /uj_beallitas` - Új beállítás feltöltés **[🔒 VÉDETT]**
+  - **Endpoint Class:** `UjBeallitas.cs`
+
+**FastEndpoints Endpoint Szerkezet Példa:**
+```csharp
+public class LoginEndPoint : Endpoint<LoginData, string>
+{
+    public override void Configure()
+    {
+        Post("/login");
+        AllowAnonymous();
+    }
+
+    public override async Task HandleAsync(LoginData req, CancellationToken ct)
+    {
+        // Validáció + token generálás
+        await SendAsync(token, cancellation: ct);
+    }
+}
+```
+
+📖 **[Részletes README →](./FastEndpoints/README.md)**
 
 ---
 
