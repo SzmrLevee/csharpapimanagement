@@ -4,55 +4,28 @@ Ez a repository C# ASP.NET Core API fejlesztés tanulására készült projektek
 
 ## 📚 Projektek Áttekintése
 
-### 1. **MinimalAPIDemo** - Alapvető Minimal API
-**Tanulási Fókusz:** Minimal API alapok, JWT autentikáció, middleware pipeline
+### 1. **RestApiHasznalat** - REST API Kliens
+**Tanulási Fókusz:** Külső API-k fogyasztása C#-ban
 
 **Mit tanulhatsz meg:**
-- Minimal API endpoint-ok létrehozása (`MapGet`, `MapPost`)
-- JWT (JSON Web Token) alapú autentikáció implementálása
-- Token generálás és validálás
-- Authorization middleware használata
-- Swagger/OpenAPI dokumentáció
-- Route paraméterek kezelése
-- Claims-based autorizáció
+- HttpClient használata
+- REST API hívások (GET)
+- JSON deszerializáció
+- Async/await pattern külső API-kkal
+- Error handling HTTP kérésekben
+- Third-party API integráció
 
 **Főbb technológiák:**
-- ASP.NET Core Minimal API
-- JWT Bearer Authentication
-- Microsoft.IdentityModel.Tokens
-- Swagger UI
+- HttpClient
+- System.Net.Http
+- JSON parsing
+- Async programming
 
-**Port:** `http://localhost:5091`
+**Példa API:** Chuck Norris Jokes API integráció
 
 ---
 
-### 2. **FastEndpoints** - FastEndpoints Framework
-**Tanulási Fókusz:** FastEndpoints library, endpoint szervezés, FluentValidation
-
-**Mit tanulhatsz meg:**
-- FastEndpoints framework használata
-- Endpoint osztályok létrehozása és szervezése
-- Dependency Injection endpoint-okban
-- FluentValidation integráció
-- Strukturált hibakezelés
-- Type-safe endpoint konfigurálás
-- Constructor injection endpoint-okban
-
-**Főbb technológiák:**
-- FastEndpoints 5.30.0
-- FluentValidation
-- JWT Authentication
-- Options pattern
-
-**Különbségek a Minimal API-hoz képest:**
-- Endpoint-ok osztály alapúak, nem inline lambda-k
-- Beépített validáció támogatás
-- Jobb kód szervezés nagyobb projektekhez
-- Type-safe request/response handling
-
----
-
-### 3. **TodoApiController** - Controller-based API
+### 2. **TodoApiController** - Controller-based API
 **Tanulási Fókusz:** Hagyományos Controller alapú API, MVC pattern
 
 **Mit tanulhatsz meg:**
@@ -78,7 +51,7 @@ Ez a repository C# ASP.NET Core API fejlesztés tanulására készült projektek
 
 ---
 
-### 4. **Authentication** - Haladó Autentikáció
+### 3. **Authentication** - Haladó Autentikáció
 **Tanulási Fókusz:** Autentikáció és autorizáció részletesen
 
 **Mit tanulhatsz meg:**
@@ -103,24 +76,51 @@ Ez a repository C# ASP.NET Core API fejlesztés tanulására készült projektek
 
 ---
 
-### 5. **RestApiHasznalat** - REST API Kliens
-**Tanulási Fókusz:** Külső API-k fogyasztása C#-ban
+### 4. **MinimalAPIDemo** - Alapvető Minimal API
+**Tanulási Fókusz:** Minimal API alapok, JWT autentikáció, middleware pipeline
 
 **Mit tanulhatsz meg:**
-- HttpClient használata
-- REST API hívások (GET)
-- JSON deszerializáció
-- Async/await pattern külső API-kkal
-- Error handling HTTP kérésekben
-- Third-party API integráció
+- Minimal API endpoint-ok létrehozása (`MapGet`, `MapPost`)
+- JWT (JSON Web Token) alapú autentikáció implementálása
+- Token generálás és validálás
+- Authorization middleware használata
+- Swagger/OpenAPI dokumentáció
+- Route paraméterek kezelése
+- Claims-based autorizáció
 
 **Főbb technológiák:**
-- HttpClient
-- System.Net.Http
-- JSON parsing
-- Async programming
+- ASP.NET Core Minimal API
+- JWT Bearer Authentication
+- Microsoft.IdentityModel.Tokens
+- Swagger UI
 
-**Példa API:** Chuck Norris Jokes API integráció
+**Port:** `http://localhost:5091`
+
+---
+
+### 5. **FastEndpoints** - FastEndpoints Framework
+**Tanulási Fókusz:** FastEndpoints library, endpoint szervezés, FluentValidation
+
+**Mit tanulhatsz meg:**
+- FastEndpoints framework használata
+- Endpoint osztályok létrehozása és szervezése
+- Dependency Injection endpoint-okban
+- FluentValidation integráció
+- Strukturált hibakezelés
+- Type-safe endpoint konfigurálás
+- Constructor injection endpoint-okban
+
+**Főbb technológiák:**
+- FastEndpoints 5.30.0
+- FluentValidation
+- JWT Authentication
+- Options pattern
+
+**Különbségek a Minimal API-hoz képest:**
+- Endpoint-ok osztály alapúak, nem inline lambda-k
+- Beépített validáció támogatás
+- Jobb kód szervezés nagyobb projektekhez
+- Type-safe request/response handling
 
 ---
 
@@ -169,11 +169,11 @@ Például: `http://localhost:5091/swagger`
 
 ---
 
-## 📖 Tanulási Útvonal Javaslat
+## 🎓 Tanulási Útvonal Javaslat
 
 ### Kezdő Szint
-1. **MinimalAPIDemo** - Kezdd itt! Alapvető API koncepciók
-2. **RestApiHasznalat** - Tanuld meg, hogyan használj API-kat
+1. **RestApiHasznalat** - Kezdd itt! API-k fogyasztása
+2. **MinimalAPIDemo** - Alapvető API készítés
 
 ### Középhaladó Szint
 3. **TodoApiController** - Controller-based API pattern
